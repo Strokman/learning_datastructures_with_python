@@ -16,22 +16,12 @@ class LinkedList:
         self.tail = None
         if args:
             for arg in args:
+                # self.append(arg)
                 if isinstance(arg, Iterable):
                     for i in arg:
                         self.append(i)
                 else:
                     self.append(arg)
-
-    def print_list(self):
-        if self.head is None:
-            return ''
-        temp = self.head
-        lst = []
-        while temp is not None:
-            val = temp.value
-            temp = temp.next
-            lst.append(val)
-        return lst
 
     def append(self, value):
         new_node = Node(value)
@@ -57,3 +47,35 @@ class LinkedList:
         if self.length == 0:
             self.head = self.tail = None
         return node
+
+    def pop_first(self):
+        if self.head is not None:
+            val = self.head.value
+            self.head = self.head.next
+            self.length -= 1
+            return val
+
+    def prepend(self, value):
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+        self.length += 1
+
+    def __repr__(self):
+        lst = []
+        temp = self.head
+        while temp is not None:
+            val = temp.value
+            temp = temp.next
+            lst.append(val)
+        return f'{lst}'
+
+    def __len__(self):
+        return self.length
+
+    def __iter__(self):
+        temp = self.head
+        while temp.next is not None:
+            val = temp.value
+            temp = temp.next
+            yield val
