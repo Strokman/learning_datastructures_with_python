@@ -1,5 +1,5 @@
 from functools import total_ordering
-from collections.abc import Iterable
+
 
 @total_ordering
 class Node:
@@ -143,11 +143,12 @@ class LinkedList:
             for i in range(len(self)):
                 if self.get(i) != other.get(i):
                     return False
+            return True
         if isinstance(other, (list, tuple)):
             for i in range(len(self)):
                 if self.get(i).value != other[i]:
                     return False
-        return True
+            return True
 
     def __lt__(self, other):
         if len(self) < len(other):
@@ -156,4 +157,4 @@ class LinkedList:
             for i in range(len(self)):
                 if self.get(i) > other.get(i):
                     return False
-        return True
+            return True

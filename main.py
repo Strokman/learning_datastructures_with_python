@@ -26,3 +26,5 @@ assert first_ll != less_ll
 assert first_ll < gt_ll
 assert first_ll > lt_ll
 
+assert first_ll != {i: 1 for i in range(10)}
+
