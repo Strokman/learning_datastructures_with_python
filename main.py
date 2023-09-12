@@ -17,3 +17,12 @@ for i in range(len(random_ll)):
 
 assert random_ll.reverse() == random_list.reverse()
 
+less_ll = LinkedList(0, 1, 2, 3, 4, 5)
+half_ll = LinkedList(1, 2, 3, 4, 5)
+gt_ll = LinkedList(*list(range(2, 12)))
+lt_ll = LinkedList(*list(range(0, 10)))
+assert first_ll > less_ll
+assert first_ll != less_ll
+assert first_ll < gt_ll
+assert first_ll > lt_ll
+

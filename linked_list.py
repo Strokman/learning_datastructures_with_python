@@ -1,6 +1,7 @@
 from functools import total_ordering
 from collections.abc import Iterable
 
+@total_ordering
 class Node:
 
     def __init__(self, value):
@@ -12,6 +13,9 @@ class Node:
 
     def __eq__(self, other):
         return self.value == other.value
+
+    def __lt__(self, other):
+        return self.value < other.value
 
 
 @total_ordering
@@ -132,18 +136,24 @@ class LinkedList:
             temp = temp.next
             yield val
 
-    def __eq__(self, obj):
-        if len(self) != len(obj):
+    def __eq__(self, other):
+        if len(self) != len(other):
             return False
-        if isinstance(obj, LinkedList):
+        if isinstance(other, LinkedList):
             for i in range(len(self)):
-                if self.get(i) != obj.get(i):
+                if self.get(i) != other.get(i):
                     return False
-        if isinstance(obj, (list, tuple)):
+        if isinstance(other, (list, tuple)):
             for i in range(len(self)):
-                if self.get(i).value != obj[i]:
+                if self.get(i).value != other[i]:
                     return False
         return True
 
     def __lt__(self, other):
-        return list(self) < other
+        if len(self) < len(other):
+            return True
+        if isinstance(other, LinkedList):
+            for i in range(len(self)):
+                if self.get(i) > other.get(i):
+                    return False
+        return True
