@@ -1,27 +1,19 @@
 from linked_list import LinkedList
-
-# lst = LinkedList(1, 2, [1, 2, 3])
-# lst.append([2, 2, 2])
-# lst.pop()
-# lst.pop_first()
-# print(lst)
-
-# lst = LinkedList(1)
-# print(lst.length)
-# print(lst.pop_first())
-# print(lst)
-# print(lst.length)
-
-
-
-
 from random import randint
 
-lst = LinkedList([randint(1, 200) for i in range(10)])
+test_list = list(range(1, 11))
+random_list = [randint(1, 100) for i in range(100)]
 
-for i in range(len(lst)):
-    print(i)
-    lst.append(i)
+first_ll = LinkedList(*test_list)
+second_ll = LinkedList(*test_list)
+assert first_ll == second_ll
+for i in range(len(test_list)):
+    assert first_ll.get(i).value == test_list[i]
+    assert second_ll.get(i).value == test_list[i]
 
-print(lst)
-print(len(lst))
+random_ll = LinkedList(*random_list)
+for i in range(len(random_ll)):
+    assert random_ll.get(i).value == random_list[i]
+
+assert random_ll.reverse() == random_list.reverse()
+
