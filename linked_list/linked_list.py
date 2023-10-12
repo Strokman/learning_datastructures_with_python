@@ -9,7 +9,7 @@ class Node:
         self.next = None
 
     def __repr__(self):
-        return f'{type(self)}_value:{self.value}'
+        return f'{self.value}'
 
     def __eq__(self, other):
         if isinstance(other, Node):
@@ -26,7 +26,7 @@ class Node:
 class LinkedList:
 
     def __init__(self, *args):
-        self.length = 0
+        self.__length = 0
         self.head = None
         self.tail = None
         if args:
@@ -40,12 +40,18 @@ class LinkedList:
         else:
             self.tail.next = new_node
             self.tail = new_node
-        self.length += 1
+        self.__length += 1
         return True
 
+    def prepend(self, value):
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+        self.__length += 1
+
     def pop(self):
-        if self.length == 0:
-            return None
+        if self.__length == 0:
+            raise IndexError('pop from empty list')
         pre = temp = self.head
         while temp.next is not None:
             pre = temp
@@ -53,8 +59,8 @@ class LinkedList:
         node = temp.value
         self.tail = pre
         self.tail.next = None
-        self.length -= 1
-        if self.length == 0:
+        self.__length -= 1
+        if self.__length == 0:
             self.head = self.tail = None
         return node
 
@@ -62,17 +68,12 @@ class LinkedList:
         if self.head is not None:
             val = self.head.value
             self.head = self.head.next
-            self.length -= 1
+            self.__length -= 1
             return val
-
-    def prepend(self, value):
-        new_node = Node(value)
-        new_node.next = self.head
-        self.head = new_node
-        self.length += 1
+        raise IndexError('pop from empty list')
 
     def get(self, index):
-        if 0 > index or index >= self.length:
+        if 0 > index or index >= self.__length:
             raise IndexError('List index ouf of range')
         counter = 0
         for i in self:
@@ -99,7 +100,7 @@ class LinkedList:
             temp = self.get(index - 1)
             new_node.next = temp.next
             temp.next = new_node
-            self.length += 1
+            self.__length += 1
 
     def set(self, index, value):
         node = self.get(index)
@@ -113,14 +114,13 @@ class LinkedList:
         else:
             node = self.get(index - 1)
             node.next = node.next.next
-        self.length -= 1
+        self.__length -= 1
 
     def reverse(self):
         temp = self.head
         self.head = self.tail
         self.tail = temp
         before = None
-        after = temp.next
         for _ in range(len(self)):
             after = temp.next
             temp.next = before
@@ -128,10 +128,10 @@ class LinkedList:
             temp = after
 
     def __repr__(self):
-        return f'{type(self)}_values:{[i for i in self]}'
+        return f'{[i for i in self]}'
 
     def __len__(self):
-        return self.length
+        return self.__length
 
     def __iter__(self):
         temp = self.head
