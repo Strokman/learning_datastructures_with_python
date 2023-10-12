@@ -9,13 +9,17 @@ class Node:
         self.next = None
 
     def __repr__(self):
-        return f'{self.value}'
+        return f'{type(self)}_value:{self.value}'
 
     def __eq__(self, other):
-        return self.value == other.value
+        if isinstance(other, Node):
+            return self.value == other.value
+        return False
 
     def __lt__(self, other):
-        return self.value < other.value
+        if isinstance(other, Node):
+            return self.value < other.value
+        return False
 
 
 @total_ordering
@@ -124,7 +128,7 @@ class LinkedList:
             temp = after
 
     def __repr__(self):
-        return f'{[i for i in self]}'
+        return f'{type(self)}_values:{[i for i in self]}'
 
     def __len__(self):
         return self.length

@@ -1,5 +1,8 @@
-from linked_list import LinkedList
+from linked_list import LinkedList, Node
 from random import randint
+
+a = Node(2)
+print(a == 3)
 
 test_list = list(range(1, 11))
 random_list = [randint(1, 100) for i in range(100)]
