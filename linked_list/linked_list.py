@@ -1,25 +1,6 @@
 from functools import total_ordering
 
-
-@total_ordering
-class Node:
-
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-
-    def __repr__(self):
-        return f'{self.value}'
-
-    def __eq__(self, other):
-        if isinstance(other, Node):
-            return self.value == other.value
-        return False
-
-    def __lt__(self, other):
-        if isinstance(other, Node):
-            return self.value < other.value
-        return False
+from node import Node
 
 
 @total_ordering
@@ -56,7 +37,7 @@ class LinkedList:
         while temp.next is not None:
             pre = temp
             temp = temp.next
-        node = temp.value
+        node = temp
         self.tail = pre
         self.tail.next = None
         self.__length -= 1
@@ -66,9 +47,10 @@ class LinkedList:
 
     def pop_first(self):
         if self.head is not None:
-            val = self.head.value
+            val = self.head
             self.head = self.head.next
             self.__length -= 1
+            val.next = None
             return val
         raise IndexError('pop from empty list')
 

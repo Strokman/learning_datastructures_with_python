@@ -1,16 +1,11 @@
-from linked_list import LinkedList, Node
+from linked_list import LinkedList
 from random import randint
 
 
 def main():
-    a = Node(2)
-    assert a != 2
-    assert a == Node(2)
-    assert a != 'test'
 
     test_list = list(range(1, 11))
     random_list = [randint(1, 100) for i in range(100)]
-
     first_ll = LinkedList(*test_list)
     second_ll = LinkedList(*test_list)
     assert first_ll == second_ll
@@ -33,7 +28,6 @@ def main():
     assert first_ll < gt_ll
     assert first_ll > lt_ll
     assert first_ll != {i: 1 for i in range(10)}
-
 
 if __name__ == '__main__':
     main()
