@@ -1,6 +1,6 @@
 from node import Node
 import random
-
+from my_queue import Queue
 import sys
 
 
@@ -18,9 +18,9 @@ class BinarySearchTree:
             return True
         temp = self.root
         while True:
-            if temp is None:
-                temp = new_node
-                return
+            # if temp is None:
+            #     temp = new_node
+            #     return
             if new_node == temp:
                 return False
             if new_node > temp:
@@ -34,6 +34,46 @@ class BinarySearchTree:
                     return
                 temp = temp.left
 
+    def bfs(self):
+        current_node = self.root
+        queue = Queue()
+        queue.enqueue(current_node)
+        result = []
+        while len(queue) > 0:
+            current_node = queue.dequeue().value
+            if current_node.left is not None:
+                queue.enqueue(current_node.left)
+            if current_node.right is not None:
+                queue.enqueue(current_node.right)
+            result.append(current_node.value)
+        return result
+
+    def dfs_pre_order(self):
+        first_node = self.root
+        results = []
+
+        def traverse(node):
+            results.append(node)
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+
+        traverse(first_node)
+        return results
+
+    def dfs_post_order(self):
+        results = []
+
+        def traverse(node):
+            if node.left is not None:
+                traverse(node.left)
+            if node.right is not None:
+                traverse(node.right)
+            results.append(node)
+        traverse(self.root)
+        return results
+
     def lookup(self, value):
         temp = self.root
         while temp is not None:
@@ -45,26 +85,16 @@ class BinarySearchTree:
                 temp = temp.left
         return False
 
-
-# lst = [random.randint(1000000, 10000000000) for i in range(10000)]
-# b = BinarySearchTree(1, 8, 9)
-# print(b.lookup(9))
-a = BinarySearchTree(1, 5, 9)
-print(a.lookup(1))
-print(a.lookup(11))
-# @time_counter
-# def bst_search(bst, value):
-#     return bst.lookup(value)
-#
-# @time_counter
-# def index_search(lst: list, value):
-#     for i in range(len(lst)):
-#         if lst[i] == value:
-#             return i
-#     return False
-#
-# val = lst[100000 - 1]
-#
-# print(bst_search(a, val))
-
-# print(index_search(lst, val))
+    # recursive approach
+    def search(self, value, temp=None):
+        if temp is None:
+            temp = self.root
+        elif temp is None:
+            return False
+        if value == temp.value:
+            return True
+        else:
+            if value > temp.value:
+                return self.search(value, temp.right)
+            else:
+                return self.search(value, temp.left)

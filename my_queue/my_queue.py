@@ -24,8 +24,11 @@ class Queue:
         if self.__length == 0:
             raise IndexError('Dequeue from empty queue')
         val = self.first
-        self.first = self.first.next
-        val.next = None
+        if self.__length == 1:
+            self.first = None
+        else:
+            self.first = self.first.next
+            val.next = None
         self.__length -= 1
         return val
 

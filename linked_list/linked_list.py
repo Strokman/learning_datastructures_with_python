@@ -1,6 +1,6 @@
 from functools import total_ordering
 
-from node import Node
+from .node import Node
 
 
 @total_ordering
